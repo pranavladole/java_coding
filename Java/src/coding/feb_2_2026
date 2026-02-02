@@ -23,4 +23,104 @@ to get list List<String> nameAA = names.stream().filter(n->n.startsWith("A")).to
 
 		System.out.println(numbers.stream().reduce(0, Integer::max));
 		System.out.println(numbers.stream().max(Integer::compare).get());
+# distinct
+		List<Integer> numbers =
+			    Arrays.asList(1,2,2,3,4,4,5);
+
+		System.out.println(numbers.stream().distinct().toList());
+#sorted
+		List<Integer> numbers = Arrays.asList(5, 1, 9, 3, 7);
+		System.out.println(numbers.stream().sorted((a,b)->b-a).toList());
+		System.out.println(numbers.stream().sorted(Comparator.reverseOrder()).toList());
+# first number greter that 5
+System.out.println(numbers.stream().filter(n->n>5).findFirst().get());
+#split into 2 group odd 1,3,5 even- 2,4,6
+		List<Integer> numbers =
+			    Arrays.asList(1,2,3,4,5,6);		
+		Map<Boolean, List<Integer>> arr = numbers.stream().collect(
+				Collectors.partitioningBy(n->n%2==0));
+		System.out.println(arr);
+# sec high num
+		int highsec = numbers.stream().distinct().sorted(Comparator.reverseOrder()).skip(1).findFirst().orElse(-1);
+		System.out.println(highsec);
+# find dup
+
+		List<Integer> numbers = Arrays.asList(1, 2, 3, 2, 4, 5, 1, 6);
+
+		List<Integer> dup = numbers.stream().collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
+				.entrySet().stream().filter(n -> n.getValue() > 1).map(Map.Entry::getKey).toList();
+		System.out.println(dup);
+
+## first nonrep
+		String s = "swiss";
+
+Character cc = s.chars().mapToObj(c -> (char) c ).collect(Collectors.groupingBy(Function.identity(),LinkedHashMap::new,Collectors.counting()))
+.entrySet().stream().filter(n->n.getValue()==1).map(Map.Entry::getKey).findFirst().orElse(null);
+
+System.out.println(cc);
+
+#count each character
+		String s = "banana";
+
+		
+		Map<Character, Long> cc = s.chars().mapToObj(c -> (char)c)
+				.collect(Collectors.groupingBy(Function.identity(),Collectors.counting()));
+		System.out.println(cc);
+
+## max stringlength
+		List<String> words =
+			    Arrays.asList("java", "springboot", "microservice", "api");
+
+		
+		String ss = words.stream().max(Comparator.comparing(String::length)).orElse(null);
+		System.out.println(ss);
+
+# join with ,
+
+		List<String> words = Arrays.asList("Java", "Spring", "Boot");
+
+		String ww = words.stream().collect(Collectors.joining(" ,"));
+		System.out.println(ww);
+# averrage
+		List<Integer> numbers = Arrays.asList(10, 20, 30, 40);
+
+		double dddd = numbers.stream().mapToInt(Integer::intValue).average().orElse(0.0);
+		System.out.println(dddd);
+
+# part greater than 5 less than 5
+
+		
+		Map<Boolean, List<Integer>> nn = numbers.stream().collect(Collectors.partitioningBy(n->n>5));
+		System.out.println(nn);
+##flat list
+
+		List<Integer> flatlist = list.stream().flatMap(List::stream).toList();
+		System.out.println(flatlist);
+
+## top 3 numbers
+		List<Integer> numbers =
+			    Arrays.asList(10, 40, 20, 90, 60, 30);
+
+		
+		List<Integer> top3num = numbers.stream().distinct().sorted(Comparator.reverseOrder())
+				.limit(3).toList();
+		
+		System.out.println(top3num);
+
+
+## to find length
+{Java=4, Stream=6, API=3}
+
+		List<String> words = Arrays.asList("Java", "Stream", "API");
+
+		Map<String, Integer> ll = words.stream().collect(Collectors.toMap(Function.identity(), String::length));
+		System.out.println(ll);
+# first dup
+Set<Integer> seen = new HashSet<>();
+		
+		
+		int dup = numbers.stream().filter(n -> !seen.add(n))
+				 .findFirst().orElse(-1);
+		System.out.println(dup);
+		
 		
