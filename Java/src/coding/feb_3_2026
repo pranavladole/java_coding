@@ -1,0 +1,47 @@
+# to find n missing number 
+		List<Integer> numbers = Arrays.asList(1,2,3,5,6);
+		int n = 6;
+		int missing = IntStream.rangeClosed(1, n).sum()
+				-numbers.stream().mapToInt(Integer::intValue).sum();
+		System.out.println(missing);
+  # to check all numbers are boolean
+  List<Integer> numbers = Arrays.asList(2,4,6,8);
+		boolean status  = numbers.stream().allMatch(n->n%2==0);
+		System.out.println(status);
+		# get sal asc
+    List<Employee> sorted =
+        emp.stream()
+           .sorted(Comparator.comparing(Employee::getSalary))
+           .toList();
+
+System.out.println(sorted);
+
+# get high sal
+
+		Employee e1 = emp.stream().sorted(Comparator.comparing(Employee::getSalary).reversed()).findFirst().orElse(null);
+		System.out.println(e1);
+  # in each dept max sal emp
+		Map<String, Employee> e1 = emp.stream().collect(
+				Collectors.groupingBy(Employee::getDepartment,Collectors.collectingAndThen(
+						Collectors.maxBy( Comparator.comparing(Employee::getSalary)), Optional::get)));
+		System.out.println(e1);
+		#most occuring and least occuring 
+    
+		int most = numbers.stream().collect(Collectors.groupingBy(Function.identity(),Collectors.counting()))
+					.entrySet()
+					.stream()
+					.max(Map.Entry.comparingByValue())
+					.map(Map.Entry::getKey)
+					.orElse(-1);
+			
+		System.out.println(most);
+		
+		int least = numbers.stream().collect(Collectors.groupingBy(Function.identity(),Collectors.counting()))
+				.entrySet()
+				.stream()
+				.min(Map.Entry.comparingByValue())
+				.map(Map.Entry::getKey)
+				.orElse(-1);
+		
+		System.out.println(least);
+    
