@@ -1,0 +1,25 @@
+# avg dept salary
+
+		Map<String, Double> deptcount = emp.stream().collect(
+				Collectors.groupingBy(Employee::getDepartment,Collectors.averagingDouble(Employee::getSalary))
+				);
+# dept count
+Map<String, Long> deptcount =
+        emp.stream()
+           .collect(Collectors.groupingBy(
+                   Employee::getDepartment,
+                   Collectors.counting()));
+
+System.out.println(deptcount);
+
+# deptcount wise name 		// {IT=[John, Bob, David], HR=[Alice, Eva]}
+Map<String, List<String>> deptcount = emp.stream().collect(
+				Collectors.groupingBy(Employee::getDepartment,Collectors.mapping(Employee::getName, Collectors.toList())));
+
+   # get highest salary {IT=90000, HR=75000, Finance=90000
+   		// {IT=90000, HR=75000, Finance=90000}
+
+		Map<String, Integer> deptcount = emp.stream().collect(
+				Collectors.groupingBy(Employee::getDepartment,Collectors.
+						collectingAndThen(Collectors.maxBy(Comparator.comparing(Employee::getSalary)), 
+								e->e.get().getSalary())));
