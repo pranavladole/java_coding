@@ -1,0 +1,8 @@
+#alter name
+
+		List<String> names = Arrays.asList("john", "alice", "bob","alice");
+		List<String> arr = IntStream.range(0, names.size()).filter(n->n%2==0)
+				.mapToObj(i->names.get(i))
+				.map(String::toUpperCase)
+				.toList();
+		System.out.println(arr);
